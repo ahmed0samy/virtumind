@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:virtumind/learning/header.dart';
+import 'package:virtumind/main.dart';
+import 'package:virtumind/models/settings_provider.dart';
 import 'package:virtumind/pages/home/chat.dart';
 
 class ChatButton extends StatelessWidget {
-  const ChatButton({super.key});
+  const ChatButton({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
+    
     return Positioned(
         bottom: 20,
         right: 20,
@@ -19,7 +26,7 @@ class ChatButton extends StatelessWidget {
           child: IconButton(
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return const ChatScreen();
+                  return ChatScreen();
                 }));
               },
               icon: const Icon(

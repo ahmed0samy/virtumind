@@ -1,7 +1,10 @@
 import 'package:dash_chat_2/dash_chat_2.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import 'dart:convert';
+
+import 'package:virtumind/models/settings_provider.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
@@ -19,7 +22,8 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Aiva"),
+        title: Text(
+            "Aiva @ ${Provider.of<SettingsProvider>(context, listen: true).APIUrl}"),
       ),
       body: DashChat(
         currentUser: _user,
@@ -31,7 +35,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
   Future<void> fetchData(String msg) async {
     final url =
-        Uri.parse('https://627e-197-161-88-129.ngrok-free.app/api/chat');
+        Uri.parse(Provider.of<SettingsProvider>(context, listen: true).APIUrl);
     final headers = {
       'content-type': 'application/json',
       'accept': '*/*',
@@ -83,8 +87,6 @@ class _ChatScreenState extends State<ChatScreen> {
     setState(() {
       messages.insert(0, message);
     });
-
-
 
     try {
       await fetchData(message.text);

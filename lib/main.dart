@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:virtumind/models/settings_provider.dart';
 import 'package:virtumind/pages/home/home.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -9,10 +12,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Home(),
-      // home: TrySomething(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<SettingsProvider>(
+          create: (context) => SettingsProvider(),
+        ),
+      ],
+      child: const MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: Home(),
+        // home: TrySomething(),
+      ),
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:virtumind/models/height_provider.dart';
+import 'package:virtumind/models/settings_provider.dart';
 import 'package:virtumind/pages/home/chat_button.dart';
 import 'package:virtumind/pages/home/gap.dart';
 import 'package:virtumind/pages/home/header.dart';
@@ -18,7 +19,10 @@ class Home extends StatelessWidget {
         providers: [
           ChangeNotifierProvider<HeightProvider>(
             create: (_) => HeightProvider()..calculateHeight(),
-          )
+          ),
+          ChangeNotifierProvider<SettingsProvider>(
+          create: (context) => SettingsProvider(),
+        ),
         ],
         child: const Scaffold(
           body: SafeArea(
