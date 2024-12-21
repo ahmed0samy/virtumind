@@ -27,15 +27,17 @@ class _ChatScreenState extends State<ChatScreen> {
       ),
       body: DashChat(
         currentUser: _user,
-        onSend: onSend,
+        onSend: (message) {
+          onSend(message, urlLink: Provider.of<SettingsProvider>(context, listen: false).APIUrl);
+        },
         messages: messages,
       ),
     );
   }
 
-  Future<void> fetchData(String msg) async {
-    final url =
-        Uri.parse(Provider.of<SettingsProvider>(context, listen: true).APIUrl);
+  Future<void> fetchData(String msg, urlLink) async {
+    var url = Uri.parse(urlLink);
+    print('******************${urlLink}');
     final headers = {
       'content-type': 'application/json',
       'accept': '*/*',
@@ -82,14 +84,14 @@ class _ChatScreenState extends State<ChatScreen> {
     }
   }
 
-  void onSend(ChatMessage message) async {
+  void onSend(ChatMessage message, {urlLink}) async {
     // Add user message to the chat
     setState(() {
       messages.insert(0, message);
     });
 
     try {
-      await fetchData(message.text);
+      await fetchData(message.text, urlLink);
     } catch (e) {
       setState(() {
         messages.insert(
